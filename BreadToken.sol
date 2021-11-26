@@ -867,8 +867,8 @@ contract BEP20 is Context, IBEP20, Ownable {
     }
 }
 
-// BreadToken with Governance.
-contract BreadToken is BEP20('Bread Token', 'BREAD') {
+// BakerToken with Governance.
+contract BakerToken is BEP20('Baker Token', 'BAKER') {
     /// @notice Creates `_amount` token to `_to`. Must only be called by the owner (MasterChef).
     function mint(address _to, uint256 _amount) public onlyOwner {
         _mint(_to, _amount);
@@ -977,9 +977,9 @@ contract BreadToken is BEP20('Bread Token', 'BREAD') {
         );
 
         address signatory = ecrecover(digest, v, r, s);
-        require(signatory != address(0), "BREAD::delegateBySig: invalid signature");
-        require(nonce == nonces[signatory]++, "BREAD::delegateBySig: invalid nonce");
-        require(now <= expiry, "BREAD::delegateBySig: signature expired");
+        require(signatory != address(0), "BAKER::delegateBySig: invalid signature");
+        require(nonce == nonces[signatory]++, "BAKER::delegateBySig: invalid nonce");
+        require(now <= expiry, "BAKER::delegateBySig: signature expired");
         return _delegate(signatory, delegatee);
     }
 
@@ -1009,7 +1009,7 @@ contract BreadToken is BEP20('Bread Token', 'BREAD') {
         view
         returns (uint256)
     {
-        require(blockNumber < block.number, "BREAD::getPriorVotes: not yet determined");
+        require(blockNumber < block.number, "BAKER::getPriorVotes: not yet determined");
 
         uint32 nCheckpoints = numCheckpoints[account];
         if (nCheckpoints == 0) {
@@ -1082,7 +1082,7 @@ contract BreadToken is BEP20('Bread Token', 'BREAD') {
     )
         internal
     {
-        uint32 blockNumber = safe32(block.number, "BREAD::_writeCheckpoint: block number exceeds 32 bits");
+        uint32 blockNumber = safe32(block.number, "BAKER::_writeCheckpoint: block number exceeds 32 bits");
 
         if (nCheckpoints > 0 && checkpoints[delegatee][nCheckpoints - 1].fromBlock == blockNumber) {
             checkpoints[delegatee][nCheckpoints - 1].votes = newVotes;
