@@ -1516,7 +1516,7 @@ contract MasterChef is Ownable, ReentrancyGuard {
     // Update dev address.
     function setDevAddress(address _devaddr) external {
         require(msg.sender == devaddr, "dev: wut?");
-		require(address(0) != _devaddr, "!nonzero");
+	require(address(0) != _devaddr, "!nonzero");
         devaddr = _devaddr;
         emit SetDevAddress(msg.sender, _devaddr);
     }
